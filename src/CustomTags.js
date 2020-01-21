@@ -3,6 +3,9 @@ import {getWhitelistFromServer, getValue} from "./mock-server"
 
 import Tags from "@yaireo/tagify/dist/react.tagify";
 
+window.addHandler = function(e) {
+    alert('Clicked ', e)
+}
 // import Tags from "@yaireo/tagify"
 
 /////////////////////////////////////////////////
@@ -18,13 +21,24 @@ const baseTagifySettings = {
   }
 }
 
+
 // this example callback is used for all Tagify events
 const callback = e =>
   console.log(`%c ${e.type}: `, "background:#222; color:#bada55", e.detail)
 
+const addCallback = e => {
+  console.log('EE ', e.target)
+  console.log(`%c ${e.type}: `, "background:#222; color:#bada55", e.detail)
+  // change html
+  let custInnerHTML = '<x title="" class="tagify__tag__addBtn" role="button" aria-label="add tag" onclick="addHandler()"></x><div><span class="tagify__tag-text">new</span></div>'
+  if(e.type) {
+      e.detail.tag.innerHTML = custInnerHTML;
+  }
+}
+
 // callbacks props (for this demo, the same callback reference is assigned to every event type)
 const tagifyCallbacks = {
-  add: callback,
+  add: addCallback,
   remove: callback,
   input: callback,
   edit: callback,
